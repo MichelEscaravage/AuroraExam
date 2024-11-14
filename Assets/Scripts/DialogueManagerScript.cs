@@ -33,8 +33,6 @@ public class DialogueManagerScript : MonoBehaviour
             dialogueText.text = dialogue[i];
             i++;
         }
-
-       
     }
 
 

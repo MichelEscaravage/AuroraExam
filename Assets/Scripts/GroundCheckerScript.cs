@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GroundCheckerScript : MonoBehaviour
 {
+
+    public bool stopCheck;
+    public float resumeCheckTime = 20f;
     public bool isGrounded;
 
     private void OnTriggerStay(Collider other)
@@ -20,5 +23,17 @@ public class GroundCheckerScript : MonoBehaviour
         {
             isGrounded = false;
         }
+    }
+
+    public void StopCheck()
+    {
+        stopCheck = true;
+        Invoke("ResumeCheck", resumeCheckTime);
+        isGrounded = false;
+    }
+
+    private void ResumeCheck()
+    {
+        stopCheck = false;  
     }
 }
