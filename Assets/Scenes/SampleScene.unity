@@ -2046,7 +2046,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -3183,7 +3183,9 @@ MonoBehaviour:
   maxJumps: 2
   horizontalSpeed: 5
   jumpHeight: 5
-  DashStrenght: 100
+  dashStrength: 10
+  dashDuration: 0.2
+  dashCooldown: 1
 --- !u!136 &1461198254
 CapsuleCollider:
   m_ObjectHideFlags: 0
