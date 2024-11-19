@@ -3500,7 +3500,9 @@ MonoBehaviour:
   maxJumps: 2
   horizontalSpeed: 5
   jumpHeight: 5
-  DashStrenght: 100
+  dashStrength: 10
+  dashDuration: 0.2
+  dashCooldown: 1
 --- !u!136 &1461198254
 CapsuleCollider:
   m_ObjectHideFlags: 0
