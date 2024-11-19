@@ -5,10 +5,16 @@ public class PlayerMovementScript : MonoBehaviour
     Rigidbody Rigidbody;
     float horizontalMovement;
     float verticalMovement;
+    private bool isDashing;
+    private float dashEndTime;
+    private float nextDashTime;
 
     [SerializeField] int maxJumps = 2; // Maximum jumps allowed
     [SerializeField] float horizontalSpeed;
     [SerializeField] float jumpHeight;
+    [SerializeField] private float dashStrength = 10f;
+    [SerializeField] private float dashDuration = 0.2f; // How long the dash lasts
+    [SerializeField] private float dashCooldown = 1f;   // Cooldown between dashes
 
     int jumpsLeft; // Remaining jumps available
     bool jumped;
@@ -31,7 +37,15 @@ public class PlayerMovementScript : MonoBehaviour
         {
             jumped = true;
             jumpsLeft--; // Decrease remaining jumps
+
         }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time >= nextDashTime)
+        {
+
+            StartDash();
+        }
+
     }
 
     private void FixedUpdate()
@@ -47,6 +61,15 @@ public class PlayerMovementScript : MonoBehaviour
                 groundChecker.StopCheck(); // Disable ground check temporarily
                 Rigidbody.AddForce(Vector3.up * jumpHeight, ForceMode.Impulse);
                 jumped = false;
+            }  
+        }
+
+        if (isDashing)
+        {
+            Rigidbody.velocity = transform.forward * dashStrength;
+            if (Time.time >= dashEndTime)
+            {
+                isDashing = false;
             }
         }
 
@@ -55,5 +78,13 @@ public class PlayerMovementScript : MonoBehaviour
         {
             jumpsLeft = maxJumps; // Allow jumps again once grounded
         }
+    
+    }
+
+    private void StartDash()
+    {
+        isDashing = true;
+        dashEndTime = Time.time + dashDuration;
+        nextDashTime = Time.time + dashCooldown;
     }
 }
