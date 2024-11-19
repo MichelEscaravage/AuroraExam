@@ -1,25 +1,16 @@
-
 using UnityEngine;
-using Cinemachine;
-using UnityEngine.UI;
-using TMPro;
 
 public class TriggerDialogueScript : MonoBehaviour
 {
-    DialogueManagerScript dialogueManagerScript;
+    private bool isPlayerInRange;
 
-   bool isPlayerInRange;
-   public TextMeshPro dialogueText;
-   public string[] dialogueScript;
-       
-    void Start()
-    {
-        dialogueManagerScript = FindObjectOfType<DialogueManagerScript>();
-        
-    }
+    [SerializeField] private string cameraName;      // Dialogue camera to activate
+    [SerializeField] private Dialogue dialogueData; // Dialogue data for this NPC
+    [SerializeField] private string PlayerCameraName; // Player camera to reset to
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             isPlayerInRange = true;
         }
@@ -27,24 +18,30 @@ public class TriggerDialogueScript : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             isPlayerInRange = false;
-           dialogueManagerScript.SwitchPriority("PlayerCamera");
-           dialogueManagerScript.EndDialogue();
+
+            if (DialogueManager.Instance.isInDialog)
+            {
+                DialogueManager.Instance.EndDialogue();
+            }
+
+            // Reset to the player camera
+            DialogueManager.Instance.SwitchPriority(PlayerCameraName);
         }
     }
 
     private void Update()
     {
-        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && dialogueManagerScript.isInDialog == false)
+        if (isPlayerInRange && Input.GetKeyDown(KeyCode.E) && !DialogueManager.Instance.isInDialog)
         {
-            dialogueManagerScript.SwitchPriority("DialogueCamera");
-            dialogueManagerScript.dialogue = dialogueScript;
-            dialogueManagerScript.dialogueText = dialogueText;
-            dialogueManagerScript.StartDialogue();
+            DialogueManager.Instance.StartDialogue(cameraName, dialogueData);
+        }
+
+        if (DialogueManager.Instance.isInDialog && Input.GetKeyDown(KeyCode.Return))
+        {
+            DialogueManager.Instance.NextDialog();
         }
     }
-
 }
-    
