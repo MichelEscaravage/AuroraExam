@@ -38,7 +38,7 @@ public class DialogueManager : MonoBehaviour
         isInDialog = true;
 
         // Switch camera and display the first line
-        Panel.SetActive(true);  
+        Panel.SetActive(true);
         SwitchPriority(cameraName);
         DisplayDialog();
     }
