@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Floor
   - NPC
+  - Terrain
   layers:
   - Default
   - TransparentFX

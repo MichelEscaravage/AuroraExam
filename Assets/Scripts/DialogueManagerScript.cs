@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -74,6 +75,13 @@ public class DialogueManager : MonoBehaviour
         isInDialog = false;
 
         ResetCameraPriorities();
+        ResetPlayer();
+    }
+
+    private void ResetPlayer()
+    {
+        int index = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(index);
     }
 
     public void SwitchPriority(string cameraName)
