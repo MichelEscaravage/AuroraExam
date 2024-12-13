@@ -1,24 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LorePickup : MonoBehaviour
 {
     public LoreItem loreItem;       // Reference to the LoreItem ScriptableObject
     public TMP_Text loreDisplayText;   // Reference to a UI Text component
+    public float displayTime = 3f; // Duration to display the message
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log($"Triggered by: {other.name}");
         if (other.CompareTag("Player"))
         {
-            if (loreDisplayText != null)
+            Debug.Log("Player detected!");
+            LoreInventory inventory = other.GetComponentInChildren<LoreInventory>();
+            if (inventory != null)
             {
-                loreDisplayText.text = $"Picked up: {loreItem.loreTitle}\n{loreItem.loreText}";
+                Debug.Log($"Adding Lore: {loreItem.loreTitle}");
+                inventory.AddLore(loreItem);
+
+                // Use a persistent object to handle the display logic
+                if (loreDisplayText != null)
+                {
+                    LoreDisplayManager.Instance.ShowLorePopup(loreDisplayText, loreItem, displayTime);
+                }
             }
-            Debug.Log($"Picked up: {loreItem.loreTitle}");
-            Destroy(gameObject); // Remove the item from the world
+            else
+            {
+                Debug.LogError("LoreInventory component not found on Player!");
+            }
+
+            // Destroy the pickup object
+            Destroy(gameObject);
         }
     }
 }
