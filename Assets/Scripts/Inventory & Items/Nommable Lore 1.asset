@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Nommable Lore 1
   m_EditorClassIdentifier: 
   loreTitle: Yee'd your last haw
-  loreIcon: {fileID: 21300000, guid: 6113f7e6a78d1784cafef128d55ec6b8, type: 3}
+  loreIcon: {fileID: 21300000, guid: 8af41826bc3ed734080124e32e5ff1e9, type: 3}
   loreText: This dog said you've yee'd your last haw partner. Prepare to be borked
